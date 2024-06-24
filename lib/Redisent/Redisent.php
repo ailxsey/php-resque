@@ -114,11 +114,11 @@ class Redisent {
                 }
                 $read = 0;
                 $size = substr($reply, 1);
-                do {
+                while ($read < $size) {
                     $block_size = ($size - $read) > 1024 ? 1024 : ($size - $read);
                     $response .= fread($this->__sock, $block_size);
                     $read += $block_size;
-                } while ($read < $size);
+                }
                 fread($this->__sock, 2); /* discard crlf */
                 break;
             /* Multi-bulk reply */
